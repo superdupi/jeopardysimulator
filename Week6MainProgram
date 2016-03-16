@@ -1,0 +1,65 @@
+from Tkinter import *
+
+class quitButton(Button):
+    def __init__(self, parent):
+        Button.__init__(self, parent)
+        self['text'] = 'Quit'
+        self['command'] = parent.destroy
+        self.pack(side=BOTTOM, fill=BOTH)
+
+##class questionButton(Button):
+##    def __init__(self, parent):
+##        Button.__init__(self, parent)
+##        self['text'] = 
+
+def AnswerPopup():
+    answerlevel = Toplevel(bg='green')
+    aCanvas = Canvas(answerlevel, width=800, height=500, bg='black')
+    Answer = Label(aCanvas, text="This is the answer")
+    Answer.pack(fill=BOTH)
+    quitButton(answerlevel)
+    
+    aCanvas.pack(side=LEFT, expand=YES, fill=BOTH)    
+
+def questionPopup():
+    toplevel = Toplevel(bg='blue')
+    qCanvas = Canvas(toplevel, width=800, height=500, bg='black')
+    Question = Label(qCanvas, text="This is the question")
+    Question.pack(fill=BOTH)
+    showAnswer = Button(qCanvas, text="Show Answer", command=AnswerPopup)
+    showAnswer.pack(fill=BOTH)
+    quitButton (toplevel)
+    qCanvas.pack(side=LEFT, expand=YES, fill=BOTH)
+
+    
+
+
+root = Tk()
+root['bg'] = 'light yellow'
+
+gameBoard = Canvas(root, width=560, height=430, bg='black')
+
+A, B, C, D, qValue = 10, 10, 110, 75, 0
+
+for row in range(6):
+    A = 10
+    C = 110
+    for column in range(5):
+        if row == 0:
+            Category = Label(gameBoard, text="CATEGORY")
+            gameBoard.create_window(A, B, width=99, height=60, window=Category, anchor='nw')
+        else:
+            questions = Button(gameBoard, text=qValue, command=questionPopup)
+            questions.config(width=99, height=60)
+            gameBoard.create_window(A, B, width=99, height=60, window=questions, anchor='nw')            
+        A += 110
+        C += 110
+    qValue += 200
+    B += 70
+    D += 70
+
+
+
+gameBoard.pack(side=LEFT, expand=YES, fill=BOTH)
+
+mainloop()
